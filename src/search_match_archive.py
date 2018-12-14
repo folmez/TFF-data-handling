@@ -5,9 +5,9 @@ import datetime
 # Default years
 START, END = src.START_YEAR, src.END_YEAR
 FILENAME = src.DEFAULT_MATCH_ARCHIVE
+DF = src.read(FILENAME, silent=True)
 
-def leagues(filename=FILENAME, start=START, end=END):
-    df = src.read(filename, silent=True)
+def leagues(start=START, end=END, df=DF):
 
     # Leagues generally are on a break in July
     start_datetime = datetime.datetime(start,7,1,0,0,0)
@@ -18,10 +18,9 @@ def leagues(filename=FILENAME, start=START, end=END):
     df = df.drop(df[df['Tarih'] > end_datetime].index)
 
     print(df['Organizasyon'].unique())
+    return list(df['Organizasyon'].unique())
 
-def referees(search_str, filename=FILENAME):
-    df = src.read(filename, silent=True)
-
+def referees(search_str, df=DF):
     # Remove matches that are not needed
     df_hakem = df[df['Hakem'].str.contains(search_str)]
     df_ar1 = df[df['AR1'].str.contains(search_str)]
@@ -34,11 +33,9 @@ def referees(search_str, filename=FILENAME):
     names = list(   set(df_hakem['Hakem'].unique()) or \
                     set(df_ar1['AR1'].unique()) or \
                     set(df_ar2['AR2'].unique()) or \
-                    set(df_dort['Dorduncu Hakem'].unique())
-                )
+                    set(df_dort['Dorduncu Hakem'].unique()))
     print(names)
+    return names
 
-def deplasman_skor(filename):
-    df = src.read_csv_into_data_frame(filename)
-
+def deplasman_skor(filename, df=DF):
     print(df['Deplasman skor'].unique())
