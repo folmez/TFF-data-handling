@@ -1,7 +1,12 @@
 import pandas as pd
 import csv
 
-def read_csv_into_data_frame(filename, silent=False):
+NUMBER_OF_EXPECTED_FIELDS = 19
+
+def read(filename, silent=False, number_of_lines = 10):
+    # Check whether csv file contains any faulty rows
+    check_number_of_fields(filename)
+
     # Load the csv file
     # 1) Dort ID and Stad ID are sometimes inputted as [], pandas doesn't
     # recognize this.
@@ -22,6 +27,16 @@ def read_csv_into_data_frame(filename, silent=False):
     df['Tarih'] = pd.to_datetime(df['Tarih'], format='%Y-%m-%d %H:%M:%S')
 
     if not silent:
-        print(df.head())
+        print(df.head(number_of_lines))
 
     return df
+
+def check_number_of_fields(filename):
+    # Number of fields should be exactly one more than the number of commas
+    # This check was added because match ID 47373 contains a referee whose name
+    # contains a comma
+    with open(filename) as f:
+        for row in f:
+            if row.count(',') is not NUMBER_OF_EXPECTED_FIELDS-1:
+                print(row)
+            assert row.count(',') is NUMBER_OF_EXPECTED_FIELDS-1
