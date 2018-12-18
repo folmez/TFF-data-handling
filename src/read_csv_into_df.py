@@ -1,11 +1,31 @@
 import pandas as pd
 import csv
 
-NUMBER_OF_EXPECTED_FIELDS = 19
+NR_OF_EXPECTED_FIELDS_IN_MATCH_ARCHIVE = 19
+NR_OF_EXPECTED_FIELDS_IN_REF_ARCHIVE = 6
 
-def read(filename, silent=False, number_of_lines = 10):
+def read_referees(filename, silent=False, number_of_lines = 10):
     # Check whether csv file contains any faulty rows
-    check_number_of_fields(filename)
+    check_number_of_fields(filename, NR_OF_EXPECTED_FIELDS_IN_REF_ARCHIVE)
+
+    # Load the csv file
+    df = pd.read_csv(filename, quoting = csv.QUOTE_NONE)
+
+    # Fix the first and the last entries, they both have an extra quote
+    df['TFF Hakem ID'] = df['TFF Hakem ID'].apply(lambda x: int(x[1:]))
+    df['Area'] = df['Area'].apply(lambda x: x[:-1])
+
+    # Convert Lisans numbers into integer
+    df['Lisans'] = df['Lisans'].apply(lambda x: int(x))
+
+    if not silent:
+        print(df.head(number_of_lines))
+
+    return df
+
+def read_matches(filename, silent=False, number_of_lines = 10):
+    # Check whether csv file contains any faulty rows
+    check_number_of_fields(filename, NR_OF_EXPECTED_FIELDS_IN_MATCH_ARCHIVE)
 
     # Load the csv file
     # 1) Dort ID and Stad ID are sometimes inputted as [], pandas doesn't
@@ -31,12 +51,12 @@ def read(filename, silent=False, number_of_lines = 10):
 
     return df
 
-def check_number_of_fields(filename):
+def check_number_of_fields(filename, expected_number):
     # Number of fields should be exactly one more than the number of commas
     # This check was added because match ID 47373 contains a referee whose name
     # contains a comma
     with open(filename) as f:
         for row in f:
-            if row.count(',') is not NUMBER_OF_EXPECTED_FIELDS-1:
+            if row.count(',') is not expected_number-1:
                 print(row)
-            assert row.count(',') is NUMBER_OF_EXPECTED_FIELDS-1
+            assert row.count(',') is expected_number-1

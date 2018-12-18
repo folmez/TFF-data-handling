@@ -1,11 +1,10 @@
-#import src
 import src
 import datetime
 
 # Default years
 START, END = src.START_YEAR, src.END_YEAR
-FILENAME = src.DEFAULT_MATCH_ARCHIVE
-DF = src.read(FILENAME, silent=True)
+ARCHIVE_FILENAME = src.DEFAULT_MATCH_ARCHIVE
+DF = src.read_matches(ARCHIVE_FILENAME, silent=True)
 
 def leagues(start=START, end=END, df=DF):
 

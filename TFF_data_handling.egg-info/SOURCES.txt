@@ -5,5 +5,7 @@ TFF_data_handling.egg-info/SOURCES.txt
 TFF_data_handling.egg-info/dependency_links.txt
 TFF_data_handling.egg-info/top_level.txt
 src/__init__.py
-src/read_csv_into_data_frame.py
-src/remove_quotes_from_csv.py
+src/read_csv_into_df.py
+src/search_match_archive.py
+src/search_ref_archive.py
+src/seasons.py
