@@ -1,8 +1,6 @@
 import src
 
-HOME_FOLDER  = '/home/folmez/Dropbox/Research1/fun-experiments/TFF-data-handling/'
-TEST_MATCH_FILENAME = HOME_FOLDER + 'tests/sample_files/sample_matches_1000_1010.csv'
-DF_matches = src.read_matches(TEST_MATCH_FILENAME, silent=True)
+from variables import DF_matches
 
 def test_leagues():
     src.leagues(df=DF_matches)

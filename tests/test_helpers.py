@@ -1,11 +1,5 @@
-import src
+from variables import DF_matches, DF_refs
 import projects
-
-HOME_FOLDER  = '/home/folmez/Dropbox/Research1/fun-experiments/TFF-data-handling/'
-TEST_MATCH_FILENAME = HOME_FOLDER + 'tests/sample_files/sample_matches_1000_1010.csv'
-TEST_REFEREE_FILENAME = HOME_FOLDER + 'tests/sample_files/sample_HAKEMLER.csv'
-DF_matches = src.read_matches(TEST_MATCH_FILENAME, silent=True)
-DF_refs = src.read_referees(TEST_REFEREE_FILENAME)
 
 def test_get_unique_AR_list():
     assert set(projects.get_unique_AR_list(DF_matches)) == set([17774,20747, \

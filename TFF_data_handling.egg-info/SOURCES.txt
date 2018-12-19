@@ -4,6 +4,10 @@ TFF_data_handling.egg-info/PKG-INFO
 TFF_data_handling.egg-info/SOURCES.txt
 TFF_data_handling.egg-info/dependency_links.txt
 TFF_data_handling.egg-info/top_level.txt
+projects/__init__.py
+projects/helpers.py
+projects/project1.py
+projects/project2.py
 src/__init__.py
 src/read_csv_into_df.py
 src/search_match_archive.py
